@@ -1,0 +1,44 @@
+<link href="js/vendor/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+<link rel="stylesheet" href="js/vendor/ng-tags-input/ng-tags-input.min.css">
+<link rel="stylesheet" href="js/vendor/ng-tags-input/ng-tags-input.bootstrap.min.css">
+<link rel='stylesheet' href='css/textAngular.css'>
+
+<div ng-controller="ImaginationFilterCtrl" ng-init="load(objectType)">
+    
+
+    
+    <div class="module-filters-by-tags">
+        <h4>Par mot-clés</h4>    
+        <div class="tags-input" ng-controller="TagAutoCompleteCtrl">
+            <tags-input ng-model="tags_filter"
+                        placeholder="> Mot-clé....&nbsp "
+                        on-tag-added="refreshFilter()"
+                        on-tag-removed="refreshFilter()"
+                        >
+                        <auto-complete source="autocompleteFacetedTags($query)" min-length="1"></auto-complete>
+            </tags-input>
+        </div>
+        <h6>Suggestions</h6>  
+        <ul class="tags module-tags-project">
+            <li ng-repeat="tag in suggestedTags | tagFieldNotInArray:config.defaultSiteTags:'name' | tagFieldNotInArray:tags_filter_flat:'name' | limitTo:6">
+                <a href="" ng-click="addToTagsFilter(tag)"><i class="fa fa-tag"></i>&nbsp;{{tag.name}}</a>
+            </li>
+
+        </ul>
+    </div><!-- /input-group -->
+
+   
+
+
+    <div class="input-group module-filters-by-text">
+        <h4>Dans le texte</h4> 
+        <form ng-submit="refreshFilter()">
+            <input type="text" ng-model="query_filter" class="form-control" placeholder="Votre recherche">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" ng-click="refreshFilter()">><i class="fa fa-ok"></i></button>
+            </span>
+
+        </form>
+    </div><!-- /input-group -->
+
+</div><!-- .sidebar-projects -->

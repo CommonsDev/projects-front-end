@@ -1,5 +1,6 @@
-<div class="list_count" >
-    <p class="count">{{ projectsheets.length || 0}} résultats <span ng-show="resultTotalCount">(total : {{ resultTotalCount }})</span> </p>
-    <button ng-show="seeMore" class="button" ng-click="loadMore()"> Voir plus </button>
-    <button ng-show="resultTotalCount < 200 && projectsheets.length != resultTotalCount" class="button" ng-click="loadAll()"> Voir tout </button>
+<div class="data-nav"> 
+    <p>{{ projectsheets.length || 0}} / <span ng-show="resultTotalCount">{{ resultTotalCount }} </span> | <a ng-show="seeMore" ng-click="loadMore()">En voir <i class="fa fa-plus-square-o"></i></a></p>
+    <div class="more-data">
+        <button ng-show="resultTotalCount < 200 && projectsheets.length != resultTotalCount" class="button" ng-click="loadAll()"> Voir tout </button>
+    </div>
 </div>

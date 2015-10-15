@@ -1,0 +1,50 @@
+p, input {
+	font-family: $font-text;
+	font-weight : 400;
+	font-size : 1rem;
+	line-height : 1.2rem;
+}
+
+p.small {
+	font-size : 0.8rem;
+	line-height : 1rem;
+}
+
+p.large {
+	font-size : 1.2rem;
+	line-height : 1.4rem;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family : $font-title;
+	font-weight : 400;
+}
+
+h1 {
+	font-size : 1.6rem;
+	line-height : 1.6rem;
+}
+
+h2 {
+	font-size : 1.4rem;
+	line-height : 1.4rem;
+}
+
+h3 {
+	font-size : 1.2rem;
+	line-height : 1.2rem;
+}
+
+h4 {
+	font-size : 1rem;
+	line-height : 1rem;
+}
+
+.uppercase {
+	text-transform : uppercase;
+}
+
+.underlined {
+	padding-bottom : 0.5rem;
+	border-bottom : 1px solid $color-primary;
+}

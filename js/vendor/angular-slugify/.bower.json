@@ -1,0 +1,22 @@
+{
+  "name": "angular-slugify",
+  "version": "1.0.1",
+  "main": "./angular-slugify.js",
+  "dependencies": {
+    "angular": "^1.0.x"
+  },
+  "devDependencies": {
+    "angular": "^1.2.x",
+    "angular-mocks": "^1.2.x"
+  },
+  "homepage": "https://github.com/paulsmith/angular-slugify",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "eff9ecc3c1234c9dd22bed8b647508f19d25c978"
+  },
+  "_source": "git://github.com/paulsmith/angular-slugify.git",
+  "_target": "*",
+  "_originalSource": "angular-slugify"
+}

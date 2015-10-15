@@ -2,242 +2,421 @@
 <link rel="stylesheet" href="js/vendor/ng-tags-input/ng-tags-input.min.css">
 <link rel="stylesheet" href="js/vendor/ng-tags-input/ng-tags-input.bootstrap.min.css">
 <link rel='stylesheet' href='css/textAngular.css'>
+<link rel="stylesheet" href="bower_components/slick-carousel/slick/slick.css" />
+<link rel="stylesheet" href="bower_components/slick-carousel/slick/slick-theme.css" />
 
 <div ng-init='init()'>
-
-    <ul id="sidenav" class="project">
-        <li ><a ng-click="editable = ! editable; populateQuestions()" ng-class="{selected: editable}"><span class="glyphicon glyphicon-pencil"></span></a></li>
-        <li><a href=""><span class="glyphicon glyphicon-share-alt"></span></a></li>
-        <li><a href=""><span class="glyphicon glyphicon-envelope"></span></a></li>
-    </ul><!-- #nav -->
-
-    <div id="intro" class="intro-project" >
-
-        <div class="container">
-
-            <div class="intro edit">
-
-                <div class="edit-buttons" ng-show="editable">
-                    <button ng-click="BaselineBtnForm.$show()" ng-hide="BaselineBtnForm.$visible">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
+    <div class="module-datas">
+      <div class="module-medias-slider">
+          <div>
+            <!-- First image of the slider is the project cover -->
+            <img ng-if="projectsheet.cover" ng-src="{{ config.media_uri }}{{ projectsheet.cover.thumbnail_url+'?width=700'}}" alt="Project Image" />
+            <img ng-if="!projectsheet.cover" src="http://www.placehold.it/900x300" alt="Project Image" ng-cloack/>
+            <div class="editable" ng-show="editable" style="padding-top:inherit">
+                <div class="edit-buttons edit-cover-image">
+                    <button ng-click="openGallery(projectsheet)"><span class="glyphicon glyphicon-camera"></span></button>
                 </div>
+            </div>
 
-                <h1>{{project.title}}</h1>
-                <h2 editable-text="project.baseline"
+          </div>
+          <div ng-if="projectsheet.bucket.files.length" ng-repeat="img in projectsheet.bucket.files" >
+                <img ng-src="{{ config.media_uri }}{{ img.thumbnail_url }}?width=683x300" alt="Slide">
+            </div>
+            <div ng-if="projectsheet.videos" ng-repeat="(url, comment) in projectsheet.videos" ng-show="$index==currentImg">
+                        <embed-video ng-href="{{url}}" width="683" height="342" style="height:342px; margin:0 auto;">
+                            <a href="{{url}}">Watch</a>
+                        </embed-video>
+                    </div>
+
+      </div>
+      <div class="module-project-container">
+        
+        <div class="module-project-content">
+            <h2 class="module-project-title">{{project.title}}</h2>
+            <a ng-click="editable = ! editable; populateQuestions()" ng-class="{selected: editable}" class="module-square-button"><i class="fa fa-pencil"></i></a>
+            <h4 editable-text="project.baseline"
                     e-form="BaselineBtnForm"
                     onbeforesave="updateProjectSheet('Project', project.id , 'baseline', $data)"
                     ng-bind-html="project.baseline">{{ project.baseline }}
-                </h2>
-                <h3><span>Fiche Projet</span></h3>
+            </h4> 
 
-                <div class="row">
-
-                    <div class="col-md-8" >
-                        <img ng-if="projectsheet.cover" ng-src="{{ config.media_uri }}{{ projectsheet.cover.thumbnail_url+'?width=700'}}" alt="Project Image" />
-                        <img ng-if="!projectsheet.cover" src="img/workshop.jpg" alt="Project Image" ng-cloack/>
-                        <div class="editable" ng-show="editable" style="padding-top:inherit">
-                            <div class="edit-buttons edit-cover-image">
-                                <button ng-click="openGallery(projectsheet)"><span class="glyphicon glyphicon-camera"></span></button>
-                            </div>
-                        </div>
+            <div class="module-project-description">
+                         
+                <section>
+                    <div class="edit-buttons" ng-click="DescBtnForm.$show()" ng-hide="DescBtnForm.$visible || !editable" ng-show="editable">
+                        <button> <span class="glyphicon glyphicon-pencil"></span></button>
                     </div>
-
-                    <div class="col-md-4">
-                        <!-- FIXME : update tags and progress -->
-                        <div class="side-header">
-                            <p>Tags</p>
-                            <ng-include onload="taggedObjectTypeName='project'" src="'views/catalog/block/tags_widget.html'"></ng-include>
-                            <!-- Web site -->
-                            <div class="editable">
-                                <p>Site Web</p>
-                                <div class="edit-buttons" ng-show="editable">
-                                    <button ng-click="WebSiteBtnForm.$show()" ng-hide="WebSiteBtnForm.$visible">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
-                                </div>
-                                <a editable-text="project.website"
-                                    e-form="WebSiteBtnForm"
-                                    onbeforesave="updateProjectSheet('Project', project.id , 'website', $data)"
-                                    ng-bind-html="project.website"
-                                    ng-href="{{ project.website }}">
-                                </a>
-                            </div>
-                            <!-- FIXME : dates ? -->
-                            <div class="editable">
-                                <p>Dernière mise à jour <span am-time-ago="projectsheet.modified"></span></p>
-                            </div>
-                            <h4><b>Localisation</b></h4>
-                            <!-- Pays -->
-                            <div class="editable">
-                                <!-- <p>Pays</p> -->
-                                <div class="edit-buttons" ng-show="editable">
-                                    <button ng-click="CountryBtnForm.$show()" ng-hide="CountryBtnForm.$visible">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
-                                </div>
-                                <p class="country" href="#" editable-select="project.location.address.country"
-                                            e-ng-options="p.id as p.text for p in countryData"
-                                            e-form="CountryBtnForm"
-                                            onbeforesave="updateProjectAddress(project.id, 'country', $data)"
-                                            >
-                                    <em>{{ showCountry(project.location.address.country) || '(pays inconnu)' }}</em>
-                                </p>
-                            </div>
-                            <!-- Adresse -->
-                            <div class="editable">
-                                <!-- <p>Adresse</p> -->
-                                <div class="edit-buttons" ng-show="editable">
-                                    <button ng-click="AddressBtnForm.$show()" ng-hide="AddressBtnForm.$visible">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
-                                </div>
-                                <p editable-text="project.location.address.street_address"
-                                    e-form="AddressBtnForm"
-                                    onbeforesave="updateProjectAddress(project.id, 'street_address', $data)"
-                                    >
-                                    {{ project.location.address.street_address || project.location.address.address_locality || '(adresse inconnue)' | capitalize:'all' }}
-                                </p>
-                            </div>
-                            <div class="minimap">
-                                <!-- <button type="button" ng-click="openGeocodingPopup()" ng-show="editable">Geolocaliser le projet</button> -->
-                                <leaflet id="minimap" defaults="defaults" markers="markers" center="center"
-                                width="250px" height="150px"></leaflet>
-                                <!-- <button type="button" ng-click="updateGeolocation(project.id)" ng-show="editable">Valider la Geolocalisation</button> -->
-                            </div>
-                        </div><!-- .side-header -->
-                    </div><!-- .col-md-4 -->
-                </div><!-- .row -->
-            </div><!-- .intro -->
-        </div><!-- .container -->
-    </div><!-- #intro -->
-
-    <div class="row container">
-        <div class="col-md-8">
-            <div id="content">
-                <tabset class="nav-tabs-project">
-                    <tab heading="Projet">
-                        <section>
-                            <div class="edit-buttons" ng-click="DescBtnForm.$show()" ng-hide="DescBtnForm.$visible || !editable" ng-show="editable">
-                                <button> <span class="glyphicon glyphicon-pencil"></span></button>
-                            </div>
-                            <h3>A propos du projet</h3>
-                            <p editable-text-angular="project.description"
-                                 e-form="DescBtnForm"
-                                 e-rows="4"
-                                 e-ta-toolbar="[['bold','italics', 'underline'], ['ul', 'ol'], ['insertLink']]"
-                                 onbeforesave="updateProjectSheet('Project', project.id , 'description', $data)"
-                                 ng-bind-html="project.description">
-                            </p>
-                        </section>
-                        <!--  FIXME : questions answers / templates -->
-                        <section ng-repeat="item in projectsheet.question_answers" ng-show="item.answer.length > 0 || editable">
-                            <h3>{{item.question.text}}</h3>
-                            <div ng-if="item.question.choices.length > 0" class="choices">
-                                <form name="choiceForm" >
-                                    <label ng-repeat="choice in item.question.choices">
-                                        <input type="checkbox" checklist-model="item.selected_choices_id" checklist-value="choice.id" ng-disabled="!editable"> {{ choice.text }}
-                                    </label>
-                                    <button type="button" class="btn btn-primary" ng-show="choiceForm.$dirty"
-                                        ng-click="updateProjectSheet('ProjectSheetQuestionAnswer', item.id , 'selected_choices_id', item.selected_choices_id); choiceForm.$setPristine();">Valider les choix</button>
-                                </form>
-                                <h5> Commentaire :</h5>
-                            </div>
-                            <div class="edit-buttons edit-question" ng-click="AnswerBtnForm.$show()" ng-hide="AnswerBtnForm.$visible || !editable" ng-show="editable">
-                                <button><span class="glyphicon glyphicon-pencil"></span></button>
-                            </div>
-                            <p editable-text-angular="item.answer"
-                                 e-form="AnswerBtnForm"
-                                 e-rows="4"
-                                 e-ta-toolbar="[['bold','italics', 'underline'], ['ul', 'ol'], ['insertLink']]"
-                                 onbeforesave="updateProjectSheet('ProjectSheetQuestionAnswer', item.id , 'answer', $data)"
-                                 ng-bind-html="item.answer">
-                            </p>
-                        </section>
-                    </tab>
-                </tabset>
-
-                <!-- FIXME : images and videos -->
-                <!-- Angular UI Tabs -->
-                <tabset class="nav-tabs-slide nav-tabs-slide-project">
-                    <tab ng-init="currentImg=0">
-                        <tab-heading>
-                            <span class="glyphicon glyphicon-picture"></span>
-                        </tab-heading>
-                        <div ng-if="projectsheet.bucket.files.length" ng-repeat="img in projectsheet.bucket.files" ng-show="$index==currentImg">
-                            <img ng-src="{{ config.media_uri }}{{ img.thumbnail_url }}?width=683x300" alt="Slide">
-                        </div>
-                        <button ng-click="currentImg = Math.abs((currentImg - 1) % projectsheet.bucket.files.length)"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
-                        <button ng-click="currentImg = (currentImg + 1) % projectsheet.bucket.files.length"><span class="glyphicon glyphicon-circle-arrow-right"></span></button>
-                        <div ng-if="!projectsheet.bucket.files.length">
-                            <img src="img/slides/slide_one.png" alt="Slide One">
-                        </div>
-                    </tab>
-                    <tab ng-init="currentVid=0">
-                        <tab-heading>
-                            <span class="glyphicon glyphicon-facetime-video"></span>
-                        </tab-heading>
-                        <div ng-if="projectsheet.videos" ng-repeat="(url, comment) in projectsheet.videos" ng-show="$index==currentImg">
-                            <embed-video ng-href="{{url}}" width="683" height="342" style="height:342px; margin:0 auto;">
-                                <a href="{{url}}">Watch</a>
-                            </embed-video>
-                        </div>
-                        <button ng-click="currentImg = Math.abs((currentImg - 1) % projectsheet.videos.length)"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
-                        <button ng-click="currentImg = (currentImg + 1) % projectsheet.videos.length"><span class="glyphicon glyphicon-circle-arrow-right"></span></button>
-                        <div ng-if="!projectsheet.videos">
-                            <img src="img/slides/slide_one.png" alt="Slide One">
-                        </div>
-                    </tab>
-                    <tab ng-show="editable" disabled="true" class="editable">
-                        <tab-heading>
-                            <span ng-click="openGallery(projectsheet)" class="glyphicon glyphicon-pencil"></span>
-                        </tab-heading>
-                    </tab>
-                </tabset>
-
-                <!--  FIXME : linked projects ?? -->
-                <!-- <section class="linked linked-project" ng-init="linkResources=true" ng-show="linkResources && (linkedResources.length || editable)">
-                    <ng-include src="'views/catalog/block/linked_resources.html'"></ng-include>
-                </section> -->
-
-            </div><!-- #content -->
-
-        </div><!-- .col-md-8 -->
-
-        <div class="col-md-4">
-            <div id="sidebar" ng-init="parentColor='project';cummunityObjectTypeName='project'">
-                <ng-include src="'views/catalog/block/community.html'"></ng-include>
-            </div><!-- #sidebar -->
-
-        </div><!-- .col-md-4 -->
-
-    </div><!-- .row -->
-
-    <!--  FIXME : similar projects -->
-    <div class="row container">
-        <div class="col-md-12">
-            <!-- <h2 class="boxed boxed-project"><span class="glyphicon glyphicon-tasks"></span> Projets</h2>
-            <ul class="boxes boxes-medium boxes-spaced">
-                 #WARNING No space between a closing </li> and the following opening one or the browser will add extra space -->
-                <!-- <li class="box" ng-repeat="project in similars">
-                    <a ui-sref="project.detail({ slug: project.parent.slug })">
-                        <h3>{{project.parent.begin_date|date : format : shortdate}}<img src="./img/icons/project/project-orange.png" alt="Orange project" /></h3>
-                        <h4>{{project.parent.baseline}}</h4>
-                        <h5>{{project.parent.title}}</h5>
-                        <img src="./img/bacasable.jpg" alt="Image background" />
-                    </a>
-                </li
-                ><li class="box box-solo box-blue">
-                    <div>
-                        <a ui-sref="project.list">Plus de projets <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <h3>A propos du projet</h3>
+                    <p editable-text-angular="project.description"
+                         e-form="DescBtnForm"
+                         e-rows="4"
+                         e-ta-toolbar="[['bold','italics', 'underline'], ['ul', 'ol'], ['insertLink']]"
+                         onbeforesave="updateProjectSheet('Project', project.id , 'description', $data)"
+                         ng-bind-html="project.description">
+                    </p>
+                </section>
+                <!--  FIXME : questions answers / templates -->
+                <h4>{{item.answer.length}}</h4>
+                <section ng-repeat="item in projectsheet.question_answers" ng-show="item.answer.length > 0 || editable">
+                    <h3>{{item.question.text}}</h3>
+                    <div ng-if="item.question.choices.length > 0" class="choices">
+                        <form name="choiceForm" >
+                            <label ng-repeat="choice in item.question.choices">
+                                <input type="checkbox" checklist-model="item.selected_choices_id" checklist-value="choice.id" ng-disabled="!editable"> {{ choice.text }}
+                            </label>
+                            <button type="button" class="btn btn-primary" ng-show="choiceForm.$dirty"
+                                ng-click="updateProjectSheet('ProjectSheetQuestionAnswer', item.id , 'selected_choices_id', item.selected_choices_id); choiceForm.$setPristine();">Valider les choix</button>
+                        </form>
+                        <h5> Commentaire :</h5>
                     </div>
-                </li>
-            </ul> -->
-
-            <a ui-sref="project.new" class="large large-red">Créer un projet</a>
+                    <div class="edit-buttons edit-question" ng-click="AnswerBtnForm.$show()" ng-hide="AnswerBtnForm.$visible || !editable" ng-show="editable">
+                        <button><span class="glyphicon glyphicon-pencil"></span></button>
+                    </div>
+                    <p editable-text-angular="item.answer"
+                         e-form="AnswerBtnForm"
+                         e-rows="4"
+                         e-ta-toolbar="[['bold','italics', 'underline'], ['ul', 'ol'], ['insertLink']]"
+                         onbeforesave="updateProjectSheet('ProjectSheetQuestionAnswer', item.id , 'answer', $data)"
+                         ng-bind-html="item.answer">
+                    </p>
+                </section>
+            </div>
+            <div class="module-project-tags">
+                <ng-include onload="taggedObjectTypeName='project'" src="'views/catalog/block/tags_widget.html'"></ng-include>
+                <!-- <ul class="module-button-list horizontal">
+                  <li><a href="#">Tag name</a></li>
+                  <li><a href="#">Tag name</a></li>
+                  <li><a href="#">Tag name</a></li>
+                  <li><a href="#">Tag name</a></li>
+                  <li><a href="#">Tag name</a></li>
+                </ul> -->
+              </div>
 
         </div>
 
-    </div><!-- .row .container -->
+        <div class="module-project-sidebar">
+              
+          <div class="module-project-location">
+            <div class="module-square-button-label">
+                <div class="icon"><i class="fa fa-map-marker"></i></div>
+                <span>Contact</span>
+            </div>
+            <div class="minimap">
+               <button type="button" ng-click="openGeocodingPopup()" ng-show="editable">Geolocaliser le projet</button>
+               <leaflet id="minimap" defaults="defaults" markers="markers" center="center"
+               width="100%" height="200px"></leaflet>
+               <button type="button" ng-click="updateGeolocation(project.id)" ng-show="editable">Valider la Geolocalisation</button>
+           </div>
+           <div class="contact-infos">
+               <!-- Adresse -->
+            <div class="editable">
+                <!-- <p>Adresse</p> -->
+                <div class="edit-buttons" ng-show="editable">
+                    <button ng-click="AddressBtnForm.$show()" ng-hide="AddressBtnForm.$visible">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </div>
+                <p editable-text="project.location.address.street_address"
+                    e-form="AddressBtnForm"
+                    onbeforesave="updateProjectAddress(project.id, 'street_address', $data)"
+                    >
+                    <span class="project-address">{{ project.location.address.street_address || project.location.address.address_locality || '(adresse inconnue)' | capitalize:'all' }}</span>
+                </p>
+            </div>
+           <div class="editable">
+                <!-- <p>Pays</p> -->
+                <div class="edit-buttons" ng-show="editable">
+                    <button ng-click="CountryBtnForm.$show()" ng-hide="CountryBtnForm.$visible">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </div>
+                <p class="country" href="#" editable-select="project.location.address.country"
+                            e-ng-options="p.id as p.text for p in countryData"
+                            e-form="CountryBtnForm"
+                            onbeforesave="updateProjectAddress(project.id, 'country', $data)"
+                            >
+                    <span class="project-country">{{ showCountry(project.location.address.country) || '(pays inconnu)' }}</span>
+                </p>
+            </div>
 
+            <div class="editable">
+                <div class="edit-buttons" ng-show="editable">
+                    <button ng-click="WebSiteBtnForm.$show()" ng-hide="WebSiteBtnForm.$visible">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </div>
+                <a editable-text="project.website"
+                    class="project-website"
+                    e-form="WebSiteBtnForm"
+                    onbeforesave="updateProjectSheet('Project', project.id , 'website', $data)"
+                    ng-bind-html="project.website"
+                    ng-href="{{ project.website }}">
+                </a>
+            </div>
+           </div>
+            
+                        
+          </div>
+          
+            <div class="module-project-team"  ng-init="parentColor='project';cummunityObjectTypeName='project'">
+                <div class="module-square-button-label">
+                    <div class="icon"><i class="fa fa-users"></i></div>
+                    <span>Communauté</span>    
+                </div>
+                <ng-include src="'views/catalog/block/community.html'"></ng-include> 
+            </div>
+
+          
+        </div>
+
+      </div>
+      
+    </div>
 </div>
+
+<script>
+      $(document).ready(function() {
+        $('.module-medias-slider').slick({
+            adaptiveHeight: true
+        });    
+      });
+</script>
+
+
+
+<!--     <ul id="sidenav" class="project">
+    <li ><a ng-click="editable = ! editable; populateQuestions()" ng-class="{selected: editable}"><span class="glyphicon glyphicon-pencil"></span></a></li>
+    <li><a href=""><span class="glyphicon glyphicon-share-alt"></span></a></li>
+    <li><a href=""><span class="glyphicon glyphicon-envelope"></span></a></li>
+</ul> -->
+
+<!--     <div id="intro" class="intro-project" >
+
+    <div class="container">
+
+        <div class="intro edit">
+
+            <div class="edit-buttons" ng-show="editable">
+                <button ng-click="BaselineBtnForm.$show()" ng-hide="BaselineBtnForm.$visible">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </div>
+
+            <h1>{{project.title}}</h1>
+            <h2 editable-text="project.baseline"
+                e-form="BaselineBtnForm"
+                onbeforesave="updateProjectSheet('Project', project.id , 'baseline', $data)"
+                ng-bind-html="project.baseline">{{ project.baseline }}
+            </h2>
+            <h3><span>Fiche Projet</span></h3>
+
+            <div class="row">
+
+                <div class="col-md-8" >
+                    <img ng-if="projectsheet.cover" ng-src="{{ config.media_uri }}{{ projectsheet.cover.thumbnail_url+'?width=700'}}" alt="Project Image" />
+                    <img ng-if="!projectsheet.cover" src="img/workshop.jpg" alt="Project Image" ng-cloack/>
+                    <div class="editable" ng-show="editable" style="padding-top:inherit">
+                        <div class="edit-buttons edit-cover-image">
+                            <button ng-click="openGallery(projectsheet)"><span class="glyphicon glyphicon-camera"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    FIXME : update tags and progress
+                    <div class="side-header">
+                        <p>Tags</p>
+                        <ng-include onload="taggedObjectTypeName='project'" src="'views/catalog/block/tags_widget.html'"></ng-include>
+                        Web site
+                        <div class="editable">
+                            <p>Site Web</p>
+                            <div class="edit-buttons" ng-show="editable">
+                                <button ng-click="WebSiteBtnForm.$show()" ng-hide="WebSiteBtnForm.$visible">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+                            <a editable-text="project.website"
+                                e-form="WebSiteBtnForm"
+                                onbeforesave="updateProjectSheet('Project', project.id , 'website', $data)"
+                                ng-bind-html="project.website"
+                                ng-href="{{ project.website }}">
+                            </a>
+                        </div>
+                        FIXME : dates ?
+                        <div class="editable">
+                            <p>Dernière mise à jour <span am-time-ago="projectsheet.modified"></span></p>
+                        </div>
+                        <h4><b>Localisation</b></h4>
+                        Pays
+                        <div class="editable">
+                            <p>Pays</p>
+                            <div class="edit-buttons" ng-show="editable">
+                                <button ng-click="CountryBtnForm.$show()" ng-hide="CountryBtnForm.$visible">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+                            <p class="country" href="#" editable-select="project.location.address.country"
+                                        e-ng-options="p.id as p.text for p in countryData"
+                                        e-form="CountryBtnForm"
+                                        onbeforesave="updateProjectAddress(project.id, 'country', $data)"
+                                        >
+                                <em>{{ showCountry(project.location.address.country) || '(pays inconnu)' }}</em>
+                            </p>
+                        </div>
+                        Adresse
+                        <div class="editable">
+                            <p>Adresse</p>
+                            <div class="edit-buttons" ng-show="editable">
+                                <button ng-click="AddressBtnForm.$show()" ng-hide="AddressBtnForm.$visible">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+                            <p editable-text="project.location.address.street_address"
+                                e-form="AddressBtnForm"
+                                onbeforesave="updateProjectAddress(project.id, 'street_address', $data)"
+                                >
+                                {{ project.location.address.street_address || project.location.address.address_locality || '(adresse inconnue)' | capitalize:'all' }}
+                            </p>
+                        </div>
+                        <div class="minimap">
+                            <button type="button" ng-click="openGeocodingPopup()" ng-show="editable">Geolocaliser le projet</button>
+                            <leaflet id="minimap" defaults="defaults" markers="markers" center="center"
+                            width="250px" height="150px"></leaflet>
+                            <button type="button" ng-click="updateGeolocation(project.id)" ng-show="editable">Valider la Geolocalisation</button>
+                        </div>
+                    </div>.side-header
+                </div>.col-md-4
+            </div>.row
+        </div>.intro
+    </div>.container
+</div>#intro
+
+<div class="row container">
+    <div class="col-md-8">
+        <div id="content">
+            <tabset class="nav-tabs-project">
+                <tab heading="Projet">
+                    <section>
+                        <div class="edit-buttons" ng-click="DescBtnForm.$show()" ng-hide="DescBtnForm.$visible || !editable" ng-show="editable">
+                            <button> <span class="glyphicon glyphicon-pencil"></span></button>
+                        </div>
+                        <h3>A propos du projet</h3>
+                        <p editable-text-angular="project.description"
+                             e-form="DescBtnForm"
+                             e-rows="4"
+                             e-ta-toolbar="[['bold','italics', 'underline'], ['ul', 'ol'], ['insertLink']]"
+                             onbeforesave="updateProjectSheet('Project', project.id , 'description', $data)"
+                             ng-bind-html="project.description">
+                        </p>
+                    </section>
+                    FIXME : questions answers / templates
+                    <section ng-repeat="item in projectsheet.question_answers" ng-show="item.answer.length > 0 || editable">
+                        <h3>{{item.question.text}}</h3>
+                        <div ng-if="item.question.choices.length > 0" class="choices">
+                            <form name="choiceForm" >
+                                <label ng-repeat="choice in item.question.choices">
+                                    <input type="checkbox" checklist-model="item.selected_choices_id" checklist-value="choice.id" ng-disabled="!editable"> {{ choice.text }}
+                                </label>
+                                <button type="button" class="btn btn-primary" ng-show="choiceForm.$dirty"
+                                    ng-click="updateProjectSheet('ProjectSheetQuestionAnswer', item.id , 'selected_choices_id', item.selected_choices_id); choiceForm.$setPristine();">Valider les choix</button>
+                            </form>
+                            <h5> Commentaire :</h5>
+                        </div>
+                        <div class="edit-buttons edit-question" ng-click="AnswerBtnForm.$show()" ng-hide="AnswerBtnForm.$visible || !editable" ng-show="editable">
+                            <button><span class="glyphicon glyphicon-pencil"></span></button>
+                        </div>
+                        <p editable-text-angular="item.answer"
+                             e-form="AnswerBtnForm"
+                             e-rows="4"
+                             e-ta-toolbar="[['bold','italics', 'underline'], ['ul', 'ol'], ['insertLink']]"
+                             onbeforesave="updateProjectSheet('ProjectSheetQuestionAnswer', item.id , 'answer', $data)"
+                             ng-bind-html="item.answer">
+                        </p>
+                    </section>
+                </tab>
+            </tabset>
+
+            FIXME : images and videos
+            Angular UI Tabs
+            <tabset class="nav-tabs-slide nav-tabs-slide-project">
+                <tab ng-init="currentImg=0">
+                    <tab-heading>
+                        <span class="glyphicon glyphicon-picture"></span>
+                    </tab-heading>
+                    <div ng-if="projectsheet.bucket.files.length" ng-repeat="img in projectsheet.bucket.files" ng-show="$index==currentImg">
+                        <img ng-src="{{ config.media_uri }}{{ img.thumbnail_url }}?width=683x300" alt="Slide">
+                    </div>
+                    <button ng-click="currentImg = Math.abs((currentImg - 1) % projectsheet.bucket.files.length)"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
+                    <button ng-click="currentImg = (currentImg + 1) % projectsheet.bucket.files.length"><span class="glyphicon glyphicon-circle-arrow-right"></span></button>
+                    <div ng-if="!projectsheet.bucket.files.length">
+                        <img src="img/slides/slide_one.png" alt="Slide One">
+                    </div>
+                </tab>
+                <tab ng-init="currentVid=0">
+                    <tab-heading>
+                        <span class="glyphicon glyphicon-facetime-video"></span>
+                    </tab-heading>
+                    <div ng-if="projectsheet.videos" ng-repeat="(url, comment) in projectsheet.videos" ng-show="$index==currentImg">
+                        <embed-video ng-href="{{url}}" width="683" height="342" style="height:342px; margin:0 auto;">
+                            <a href="{{url}}">Watch</a>
+                        </embed-video>
+                    </div>
+                    <button ng-click="currentImg = Math.abs((currentImg - 1) % projectsheet.videos.length)"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
+                    <button ng-click="currentImg = (currentImg + 1) % projectsheet.videos.length"><span class="glyphicon glyphicon-circle-arrow-right"></span></button>
+                    <div ng-if="!projectsheet.videos">
+                        <img src="img/slides/slide_one.png" alt="Slide One">
+                    </div>
+                </tab>
+                <tab ng-show="editable" disabled="true" class="editable">
+                    <tab-heading>
+                        <span ng-click="openGallery(projectsheet)" class="glyphicon glyphicon-pencil"></span>
+                    </tab-heading>
+                </tab>
+            </tabset>
+
+            FIXME : linked projects ??
+            <section class="linked linked-project" ng-init="linkResources=true" ng-show="linkResources && (linkedResources.length || editable)">
+                <ng-include src="'views/catalog/block/linked_resources.html'"></ng-include>
+            </section>
+
+        </div>#content
+
+    </div>.col-md-8
+
+    <div class="col-md-4">
+        <div id="sidebar" ng-init="parentColor='project';cummunityObjectTypeName='project'">
+            <ng-include src="'views/catalog/block/community.html'"></ng-include>
+        </div>#sidebar
+
+    </div>.col-md-4
+
+</div>.row
+
+FIXME : similar projects
+<div class="row container">
+    <div class="col-md-12">
+        <h2 class="boxed boxed-project"><span class="glyphicon glyphicon-tasks"></span> Projets</h2>
+        <ul class="boxes boxes-medium boxes-spaced">
+             #WARNING No space between a closing </li> and the following opening one or the browser will add extra space
+            <li class="box" ng-repeat="project in similars">
+                <a ui-sref="project.detail({ slug: project.parent.slug })">
+                    <h3>{{project.parent.begin_date|date : format : shortdate}}<img src="./img/icons/project/project-orange.png" alt="Orange project" /></h3>
+                    <h4>{{project.parent.baseline}}</h4>
+                    <h5>{{project.parent.title}}</h5>
+                    <img src="./img/bacasable.jpg" alt="Image background" />
+                </a>
+            </li
+            ><li class="box box-solo box-blue">
+                <div>
+                    <a ui-sref="project.list">Plus de projets <span class="glyphicon glyphicon-chevron-right"></span></a>
+                </div>
+            </li>
+        </ul>
+
+        <a ui-sref="project.new" class="large large-red">Créer un projet</a>
+
+    </div>
+
+</div>.row .container
+
+</div> -->

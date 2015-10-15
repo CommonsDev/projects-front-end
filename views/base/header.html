@@ -1,80 +1,35 @@
-<div id="header">
+<!-- Navigation bar -->
+    <div class="fixed contain-to-grid">
+      <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+          <li class="name">
+            <h1><a ui-sref="project.list">Common Dev </a></h1>
+          </li>
+           <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+          <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
 
-    <header id="fixed-nav" >
-        <nav id="menu" role="navigation">
-            <div class="container">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" ui-sref="project.list"><img src="./img/imagination.logo.jpg" alt="Logo Imagination" /></a>
-                    </div>
+        <section class="top-bar-section">
+          <!-- Right Nav Section -->
+          <ul class="right">
+            <li ng-show="!authVars.isAuthenticated" ><a ng-click="openSignupPopup()">S'inscrire</a></li>
+            <li ng-show="!authVars.isAuthenticated" ><a ng-click="forceLogin()">Se connecter</a></li>
+            <li ng-show="authVars.isAuthenticated" class="has-dropdown">
+              <a href="#">Mon profil</a>
+              <ul class="dropdown">
+                <li><a href="#">Mes infos</a></li>
+                <li><a href="#">Mes projets</a></li>
+              </ul>
+            </li>
+          </ul>
 
+          <!-- Left Nav Section -->
+          <ul class="left">
+            <li><a href="#">Projets</a></li>
+            <li><a href="#">Membres</a></li>
+            <li><a href="#">A propos</a></li>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <!-- <li><a ui-sref="home" ng-class="{ selected: $state.includes('home') }">Accueil</a></li> -->
-                            <li><a ui-sref="about" ng-class="{ selected: $state.includes('about') }">A propos</a></li>
-                            <li><a ui-sref="profile.list" ng-class="{ selected: $state.includes('profile.list') }">Membres</a></li>
-                            <!-- <li><a ui-sref="map" ng-class="{ selected: $state.includes('map') }">Cartographie</a></li> -->
-                            <li><a ui-sref="project.list({tag:'',query:''})" ng-class="{ selected: $state.includes('project.list') }">Projets</a></li>
-                            <li><a ui-sref="project.new()" ng-class="{ selected: $state.includes('project.new') }">Ajouter</a></li>
-                            <!-- <li><a ui-sref="forum" ng-class="{ selected: $state.includes('forum') }">Discussions</a></li> -->
-                        </ul>
-                        <!--
-                        <form class="navbar-right" ng-show="!authVars.isAuthenticated && !showLoginPanel">
-                            <button class="connect" ng-init="showLoginPanel=false" ng-click="showLoginPanel=true">Se connecter</button>
-                        </form>
-                        -->
-                        <p class="register-login" ng-show="!authVars.isAuthenticated">
-                            <button class="button" ng-click="openSignupPopup()">S'inscrire</button>
-                            <button class="button" ng-click="forceLogin()">Se connecter</button>
-                        </p>
-                        <div class="dropdown dropdown-logged-in" ng-show="authVars.isAuthenticated">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"
-                                ng-init="arobaseIndex = authVars.user.username.indexOf('@')">
-                                {{ authVars.user.username | limitTo:23}} <span ng-if="authVars.user.username.length > 24">...</span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="profile.detail({id:currentProfile.id})">Mon Profil</a></li>
-                                <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Activités récentes</a></li> -->
-                                <!-- <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="profile.dashboard({slug:currentMakerScienceProfile.slug})">Mes paramètres</a></li> -->
-                                <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Aide</a></li> -->
-                                <li role="presentation"><a ng-click="logout()" role="menuitem" tabindex="-1" href="#">Me déconnecter</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Showing when loggin in and when logged in -->
-                        <form method="post" class="" role="search">
-                            <ng-include src="'/views/base/search.html'"></ng-include>
-                        </form>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </div><!-- .container -->
-        </nav><!-- #menu -->
-    </header>
-
-    <!-- CRUMBS  -->
-    <!-- <div class="crumbs" ng-hide="$state.includes('home')">
-        <div class="container">
-            <div ncy-breadcrumb></div>
-        </div>
-    </div> -->
-
-</div><!-- #header -->
-
-<!-- DEBUG #FIXME -->
-// <script type="text/javascript">
-// $('#fixed-nav').affix({
-//   offset: {
-//     top: 0,
-//     // bottom: function () {
-//     //   return (this.bottom = $('.footer').outerHeight(true))
-//     // }
-//   }
-// })
-// </script>
+          </ul>
+        </section>
+      </nav>
+    </div>

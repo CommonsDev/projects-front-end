@@ -1,48 +1,22 @@
+           
+<div class="module-datas" ng-controller="ProjectSheetListCtrl"  ng-init="init(config.defaultResultLimit, false)">
+    <div class="module-search">
+        <ng-include ng-init="objectType='project'" onload="objectType='project'" src="'views/catalog/block/search.html'"></ng-include>
+    </div>
+    <ng-include src="'views/catalog/block/list_counter.html'" ></ng-include>
 
-<div class="row container">
+    <ul class="module-grid">
+        <li class="module-item"  ng-repeat="projectsheet in projectsheets">
+            <ng-include src="'views/catalog/block/project_thumb.html'" ng-init="project=projectsheet.project; cover=projectsheet.cover"></ng-include>
+        </li>
+    </ul>
 
-    <div id="content" class="listing" ng-controller="ProjectSheetListCtrl"  ng-init="init(config.defaultResultLimit, false)">
+    <div class="module-map">
+        <div class="map" ng-controller="ImaginationProjectsMapCtrl">
+            <leaflet id="projectsmap" defaults="defaults" markers="markers" center="center" height="550px" ></leaflet>
+        </div>
+    </div>        
+    
+    <ng-include src="'views/catalog/block/list_counter.html'"></ng-include>
+</div>
 
-        <div class="col-md-12">
-
-            <div class="row">
-                <div class="col-md-9">
-                    <ng-include src="'views/catalog/block/list_counter.html'" style="position:absolute;left: 50%;"></ng-include>
-
-                    <tabset class="nav-tabs-listing">
-                        <tab heading="Aperçu">
-
-                            <div class="boxes boxes-small boxes-projects" >
-                                <div class="box" ng-repeat="projectsheet in projectsheets">
-                                    <ng-include src="'views/catalog/block/project_thumb.html'" ng-init="project=projectsheet.project; cover=projectsheet.cover"></ng-include>
-                                </div><!-- .box -->
-                            </div><!-- .boxes -->
-
-                        </tab>
-                        <!-- <tab heading="Détaillés">
-                            ... coming soon
-                            <div class="boxes boxes-small boxes-projects" >
-                                <div class="box" ng-repeat="projectsheet in projectsheets">
-                                    <ng-include src="'views/catalog/block/project_thumb.html'" ng-init="project=projectsheet.project"></ng-include>
-                                </div>
-                            </div>
-                        </tab> -->
-                        <tab heading="Carte" ng-click="showMap=true">
-                            <div ng-if="showMap" class="map" ng-controller="ImaginationProjectsMapCtrl">
-                                <leaflet id="projectsmap" defaults="defaults" markers="markers" center="center" height="550px" ></leaflet>
-                            </div>
-                        </tab>
-                    </tabset>
-                    <ng-include ng-show="projectsheets.length > 0" src="'views/catalog/block/list_counter.html'" style="position: relative;left: 41%;"></ng-include>
-                    <a ui-sref="project.new" class="large large-red" style="margin-top:10px">Créer un projet</a>
-
-                </div>
-                <div class="col-md-3">
-                    <ng-include ng-init="objectType='project'" onload="objectType='project'" src="'views/catalog/block/filters.html'"></ng-include>
-                </div>
-
-        </div><!-- .col-md-12 -->
-
-    </div><!-- #content -->
-
-</div><!-- .row .container -->

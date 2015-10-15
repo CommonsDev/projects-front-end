@@ -1,16 +1,27 @@
-<h3>{{project.begin_date|date : format : shortdate}}
-    <img ng-src="{{ config.media_uri }}{{ project.progress.icon }}" alt="{{project.progress.label}}">
-</h3>
-<a ui-sref="project.detail({ slug: project.slug })">
-    <img ng-if="!cover" class="background" src="./img/workshop_small.jpg" alt="Image background" />
-    <img ng-if="cover" class="background" ng-src="{{ config.media_uri }}{{ cover.thumbnail_url+'?width=500x180'}}" alt="Image background" />
-</a>
-<div class="description">
-    <h4><a ui-sref="project.detail({ slug: project.slug })">{{project.title}}</a></h4>
-    <h5 ng-if="project.by">Par
-        <a ui-sref="profile.detail({slug:project.by.profile_slug})">
-            {{project.by.full_name}}
+
+	<h3 style="display:none">{{project.begin_date|date : format : shortdate}}
+	    <img ng-src="{{ config.media_uri }}{{ project.progress.icon }}" alt="{{project.progress.label}}">
+	</h3>
+    <div class="module-item-thumbnail">
+		<a ui-sref="project.detail({ slug: project.slug })">
+            <div ng-if="cover" class="module-item-image" style="
+	    		background-image:url('{{ config.media_uri }}{{ cover.thumbnail_url}}');
+				background-size : cover;		
+    		"></div>
+    		<div ng-if="!cover" class="module-item-image" style="
+	    		background-image:url('http://placehold.it/300x300');
+				background-size : cover;		
+    		"></div>
         </a>
-    </h5>
-</div>
-<p class="baseline"><a ui-sref="project.detail({ slug: project.slug })">{{project.baseline}}</a></p>
+    </div>
+    <div class="module-item-content">
+	    <h4 class="module-item-title"><a ui-sref="project.detail({ slug: project.slug })">{{project.title}}</a></h4>
+	    <h5 ng-if="project.by">Par
+	        <a ui-sref="profile.detail({slug:project.by.profile_slug})">
+	            {{project.by.full_name}}
+	        </a>
+	    </h5>
+	    <p class="module-item-description small">{{ project.baseline }}</p>	
+    </div>
+    
+

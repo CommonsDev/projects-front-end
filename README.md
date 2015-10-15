@@ -1,65 +1,29 @@
-Project platform HTML FrontEnd
-===========
+# Foundation Compass Template
 
-A Projet front-end companion for the Data Server.
+The easiest way to get started with Foundation + Compass.
 
-Version 0.5.6
+## Requirements
 
-Installation
-=====
+  * Ruby 1.9+
+  * [Node.js](http://nodejs.org)
+  * [compass](http://compass-style.org/): `gem install compass`
+  * [bower](http://bower.io): `npm install bower -g`
 
-   sudo aptitude install ruby-compass ruby-fssm coffeescript
+## Quickstart
 
-   git clone https://github.com/UnissonCo/projects-front-end.git
+  * [Download this starter compass project and unzip it](https://github.com/zurb/foundation-compass-template/archive/master.zip)
+  * Run `bower install` to install the latest version of Foundation
+  
+Then when you're working on your project, just run the following command:
 
-   cd js/src
+```bash
+bundle exec compass watch
+```
 
-   nano config.coffee
+## Upgrading
 
-#### If using localhost:8002 as a dataserver, use this configuration (default configuration) :
+If you'd like to upgrade to a newer version of Foundation down the road just run:
 
-    bucket_uri: 'http://localhost:8002/bucket/upload/',
-    loginBaseUrl: 'http://localhost:8002/api/v0', # This can be different from rest_uri
-    oauthBaseUrl: 'Ajouter ici l'url de votre site', #path to oauth.html
-    oauthCliendId: 'Ajouter ici l'ID d'authentification google',
-    media_uri: 'http://localhost:8002',
-    rest_uri: "http://localhost:8002/api/v0",
-    dataserver_url: "http://localhost:8002"
-
-
-   ./coffee_watch.sh
-
-   cd ..
-
-   cd ..
-
-   cd css
-
-   compass w
-
-   cd ..
-
-   npm install
-
-   node_modules/.bin/bower install
-
-   python -m SimpleHTTPServer 8080
-
-
-Personnaliation
-=====
-
-Vous pouvez personnaliser votre installation avec le fichier config.coffee (à regénérer après chaque modification):
-
-
-    projectSheetTemplateSlug: 'accompagnement',
-    # Pour proposer un autre modèle de questions sur les fiches projets
-
-    defaultSiteTags: [],  # comma-separated list of site tags
-    # Pour choisir un tag par défaut qui filtrera tout le site selon ce tag
-
-    editorialSuggestedTags : ['tag1', 'tag2'],
-    # List of tags suggested instead of most popular ones
-
-    defaultResultLimit : 25,
-    # nb of results loaded by default in projects list page
+```bash
+bower update
+```

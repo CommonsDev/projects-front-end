@@ -6,7 +6,7 @@
         <div>
             <ul class="tags tags-project">
                 <li ng-repeat="tag in preparedTags | limitTo:10 | tagFieldNotInArray:config.defaultSiteTags:'text'"
-                    ui-sref="project.list({tag:tag.text})"><a>{{tag.text}}</a></li>
+                    ui-sref="project.list({tag:tag.text})"><a><i class="fa fa-tag"></i>{{tag.text}}</a></li>
                 <li><a ng-show="preparedTags.length > 10" href="" tooltip="Voir tous les tags" ng-click="openTagPopup(false)">...</a></li>
             </ul>
         </div>

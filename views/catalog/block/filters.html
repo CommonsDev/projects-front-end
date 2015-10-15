@@ -3,10 +3,13 @@
 <link rel="stylesheet" href="js/vendor/ng-tags-input/ng-tags-input.bootstrap.min.css">
 <link rel='stylesheet' href='css/textAngular.css'>
 
-<div class="sidebar-filters sidebar-projects" ng-controller="ImaginationFilterCtrl" ng-init="load(objectType)">
-    <h4>Filtrage Thématique</h4>
-    <div class="" style="width:100%; padding-bottom:10px;">
-        <div class="" ng-controller="TagAutoCompleteCtrl">
+<div ng-controller="ImaginationFilterCtrl" ng-init="load(objectType)">
+    
+
+    
+    <div class="module-filters-by-tags">
+        <h4>Par mot-clés</h4>    
+        <div class="tags-input" ng-controller="TagAutoCompleteCtrl">
             <tags-input ng-model="tags_filter"
                         placeholder="> Mot-clé....&nbsp "
                         on-tag-added="refreshFilter()"
@@ -15,16 +18,19 @@
                         <auto-complete source="autocompleteFacetedTags($query)" min-length="1"></auto-complete>
             </tags-input>
         </div>
+        <ul class="tags module-tags-project">
+            <li ng-repeat="tag in suggestedTags | tagFieldNotInArray:config.defaultSiteTags:'name' | tagFieldNotInArray:tags_filter_flat:'name' | limitTo:6">
+                <a href="" ng-click="addToTagsFilter(tag)">{{tag.name}}</a>
+            </li>
+
+        </ul>
     </div><!-- /input-group -->
-    <ul class="tags tags-project">
-        <li ng-repeat="tag in suggestedTags | tagFieldNotInArray:config.defaultSiteTags:'name' | tagFieldNotInArray:tags_filter_flat:'name' | limitTo:6">
-            <a href="" ng-click="addToTagsFilter(tag)">{{tag.name}}</a>
-        </li>
 
-    </ul>
+   
 
-    <h4>Moteur de recherche</h4>
-    <div class="input-group">
+
+    <div class="input-group module-filters-by-text"">
+        <h4>Par mot-clés</h4> 
         <form ng-submit="refreshFilter()">
             <input type="text" ng-model="query_filter" class="form-control" placeholder="Rechercher...">
             <span class="input-group-btn">
@@ -35,14 +41,3 @@
     </div><!-- /input-group -->
 
 </div><!-- .sidebar-projects -->
-<style>
-div.sidebar-preview {
-    z-index: 1000;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 0.5;
-}
-</style>

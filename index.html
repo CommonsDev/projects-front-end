@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html ng-app="imagination">
-<head>
-    <title>Imagination.Social</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Common Dev</title>
 
-    <link href='css/font-awesome/css/font-awesome.min.css' rel='stylesheet' >
     <link href='js/vendor/leaflet/dist/leaflet.css' rel='stylesheet' >
     <link href='js/vendor/leaflet.markercluster/dist/MarkerCluster.css' rel='stylesheet' >
     <link href='js/vendor/leaflet.markercluster/dist/MarkerCluster.Default.css' rel='stylesheet' >
@@ -14,89 +12,294 @@
     <link href='js/vendor/angular-loading-bar/build/loading-bar.min.css' rel='stylesheet' >
     <link href='js/vendor/textAngular/src/textAngular.css' rel='stylesheet' >
 
-    <link href="css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    <link href="css/print.css" media="print" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<div class="container-fluid">
-
+    <link rel="stylesheet" href="css/app.css" />
+    <script src="bower_components/modernizr/modernizr.js"></script>
+  </head>
+  <body>
     <ng-include src="'views/base/header.html'"></ng-include>
+    
+    <div class="row">
+      <div class="small-12 columns">
+        <p>&nbsp; </p>
+        <p>&nbsp;  </p>
+        <p> &nbsp; </p>
+        <h2>Bienvenu Camarade !</h2>
+        
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit repellendus, quasi, ullam cum quis iusto consequuntur ipsum dignissimos repellat adipisci ut, cumque aliquid! Incidunt dolores nihil animi natus rerum repudiandae.</p>
 
-    <ui-view class="content-wrapper">
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 columns">
 
-    </ui-view>
+        <section class="module list" >
+        
+            <header>
+                <div class="module-icon module-square-button">
+                    <a href=""><i class="fa fa-navicon"></i></a>
+                </div>
+                  <h2 class="module-title">LES PROJETS</h2>
+                <div class="module-search-button" ><a href="#" class="module-square-button"><i class="fa fa-search"></i></a></div>
+                
+                <div class="module-views" ng-if="$state.is('project.list')">
+                  <ul class="module-button-list horizontal">
+                    <li><a href="#" class="module-view-grid module-square-button active"><i class="fa fa-th-large"></i></a></li>
+                    <li><a href="#" class="module-view-map module-square-button"><i class="fa fa-map-marker"></i></a></li>
+                  </ul>
+                </div>
+                
+            </header>
+
+            <div class="main-content">
+              <div class="module-actions">
+                <ul class="module-button-list">
+                  <li><a ui-sref="project.list" ng-if="$state.is('project.detail')" class="module-square-button"><i class="fa fa-back"></i></a></li>
+                  <li><a ui-sref="project.new" class="module-square-button"><i class="fa fa-plus"></i></a></li>
+                  <li><a class="module-square-button"><i class="fa fa-pencil"></i></a></li>
+                  <li><a href="#" class="module-square-button"><i class="fa fa-trash"></i></a></li>
+                  <li><a href="#" class="module-square-button"><i class="fa fa-question"></i></a></li>
+                </ul>
+              </div>  
+              <ui-view class="content-wrapper">
+
+              </ui-view>
+            </div>
+
+            <footer>
+                <div class="status-msg">
+                  
+                </div>
+            </footer>
+
+          </section>
+        </div>
+      </div>
+
+    
+
 
     <ng-include src="'/views/base/signinModal.html'" ng-show="$root.authVars.loginrequired"></ng-include>
-    <!--<ng-include src="'views/base/login.html'"></ng-include>-->
-    <!-- <ng-include src="'views/base/footer.html'"></ng-include> -->
 
-</div><!-- .container-fluid -->
-<!-- google services -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+    
 
-<script src="js/vendor/jquery/dist/jquery.min.js"></script>
-<script src="js/vendor/angular/angular.js"></script>
-<script src="js/vendor/underscore/underscore-min.js"></script>
-<script src="js/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script src="js/vendor/restangular/dist/restangular.js"></script>
-<script src="js/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
-<script src="js/vendor/slug/slug.js"></script>
-<script src="js/vendor/angular-xeditable/dist/js/xeditable.min.js"></script>
-<script src="js/vendor/rangy-official/rangy-core.min.js"></script>
-<script src="js/vendor/rangy-official/rangy-classapplier.min.js"></script>
-<script src="js/vendor/rangy-official/rangy-highlighter.min.js"></script>
-<script src="js/vendor/rangy-official/rangy-selectionsaverestore.min.js"></script>
-<script src="js/vendor/rangy-official/rangy-serializer.min.js"></script>
-<script src="js/vendor/rangy-official/rangy-textrange.min.js"></script>
-<script src="js/vendor/textAngular/dist/textAngular-sanitize.min.js"></script>
-<script src="js/vendor/textAngular/dist/textAngular.min.js"></script>
-<script src="js/vendor/ng-tags-input/ng-tags-input.min.js"></script>
-<script src="js/vendor/moment/min/moment.min.js"></script>
-<script src="js/vendor/angular-moment/angular-moment.min.js"></script>
-<script src="js/vendor/moment/locale/fr.js"></script>
-<script src="js/vendor/angular-unisson-auth/angular-unisson-auth.js"></script>
-<script src="js/vendor/angular-http-auth/src/http-auth-interceptor.js"></script>
-<script src="js/vendor/angular-oauth/src/js/angularOauth.js"></script>
-<script src="js/vendor/angular-oauth/src/js/googleOauth.js"></script>
-<script src="js/vendor/angular-cookies/angular-cookies.min.js"></script>
-<script src="js/vendor/angularjs-gravatardirective/dist/angularjs-gravatardirective.min.js"></script>
-<script src="js/vendor/es5-shim/es5-sham.min.js"></script>
-<script src="js/vendor/es5-shim/es5-shim.min.js"></script>
-<script src="js/vendor/angular-file-upload/angular-file-upload.min.js"></script>
-<script src="js/vendor/leaflet/dist/leaflet.js"></script>
-<script src="js/vendor/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
-<script src="js/vendor/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
-<script src="js/vendor/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-<script src="js/vendor/angucomplete-alt/angucomplete-alt.js"></script>
-<script src="js/vendor/ng-videosharing-embed/build/ng-videosharing-embed.min.js"></script>
-<script src="js/vendor/geocoder-service/geocoder-service.min.js"></script>
-<script src="js/vendor/angular-breadcrumb/release/angular-breadcrumb.min.js"></script>
-<script src="js/vendor/bootstrap/js/dropdown.js"></script>
-<script src="js/vendor/angular-truncate/src/truncate.js"></script>
-<script src="js/vendor/checklist-model/checklist-model.js"></script>
-<script src="js/vendor/angular-loading-bar/build/loading-bar.min.js"></script>
-<script src="js/vendor/angular-capitalize-filter/capitalize.min.js"></script
-<script src="js/vendor/angular-slugify/angular-slugify.js"></script>
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
+    <div class="row">
+      <div class="small-12 columns">
 
-<script src="js/imagination/catalog/controllers.js"></script>
-<script src="js/imagination/profile/controllers.js"></script>
-<script src="js/imagination/profile/services.js"></script>
-<script src="js/map/controllers.js"></script>
-<script src="js/commons/base/controllers.js"></script>
-<script src="js/commons/base/services.js"></script>
-<script src="js/commons/base/filters.js"></script>
-<script src="js/commons/catalog/controllers.js"></script>
-<script src="js/commons/catalog/services.js"></script>
-<script src="js/commons/commonsdevmap/services.js"></script>
-<script src="js/commons/accounts/services.js"></script>
-<script src="js/commons/accounts/controllers.js"></script>
-<script src="js/commons/accounts/directives.js"></script>
-<script src="js/commons/graffiti/controllers.js"></script>
-<script src="js/commons/graffiti/services.js"></script>
-<script src="js/commons/ucomment/controllers.js"></script>
-<script src="js/commons/ucomment/services.js"></script>
-<script src="js/app.js"></script>
-</body>
+        <!-- Home page 
+        <h1 class="uppercase underlined">LES PROJETS</h1>
+
+
+        <section class="module list">
+          <header>
+            <div class="module-icon module-square-button"><a href=""><i class="fa fa-navicon"></a></i></div>
+            <div class="module-views">
+              <ul class="module-button-list horizontal">
+                <li><a href="#" class="module-square-button"><i class="fa fa-list"></i></a></li>
+                <li><a href="#" class="module-square-button"><i class="fa fa-th-large"></i></a></li>
+                <li><a href="#" class="module-square-button"><i class="fa fa-map-marker"></i></a></li>
+              </ul>
+            </div>
+            <div class="module-filter-button" ><a href="#" class="module-square-button"><i class="fa fa-filter"></i></a></div>
+            <div class="module-search-button" ><a href="#" class="module-square-button"><i class="fa fa-search"></i></a></div>
+
+          </header>
+          <div class="main-content">
+            <div class="module-actions">
+              <ul class="module-button-list">
+                <li><a href="#" class="module-square-button"><i class="fa fa-plus"></i></a></li>
+                <li><a href="#" class="module-square-button"><i class="fa fa-pencil"></i></a></li>
+                <li><a href="#" class="module-square-button"><i class="fa fa-trash"></i></a></li>
+                <li><a href="#" class="module-square-button"><i class="fa fa-question"></i></a></li>
+              </ul>
+            </div>
+            <div class="module-datas">
+              <div class="module-search">
+                <form action="">
+                  <input type="text" name="" id="">
+                </form>
+              </div>
+              <div class="data-nav"> 
+                <p>28 / 3086 résultats</p>
+              </div>
+              <ul class="module-grid">
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <a href="#">
+                      <div class="module-item-image">
+                        <img src="http://placehold.it/300x300" alt=""></div>
+                      </div>
+                    </a>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li>
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <div class="module-item-image">
+                      <img src="http://placehold.it/300x300" alt=""></div>
+                    </div>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li> 
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <div class="module-item-image">
+                      <img src="http://placehold.it/300x300" alt=""></div>
+                    </div>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li>                
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <div class="module-item-image">
+                      <img src="http://placehold.it/300x300" alt=""></div>
+                    </div>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li>                
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <div class="module-item-image">
+                      <img src="http://placehold.it/300x300" alt=""></div>
+                    </div>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li>                
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <div class="module-item-image">
+                      <img src="http://placehold.it/300x300" alt=""></div>
+                    </div>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li>                
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <div class="module-item-image">
+                      <img src="http://placehold.it/300x300" alt=""></div>
+                    </div>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li>                
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <div class="module-item-image">
+                      <img src="http://placehold.it/300x300" alt=""></div>
+                    </div>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li>                
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <div class="module-item-image">
+                      <img src="http://placehold.it/300x300" alt=""></div>
+                    </div>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li>                
+                <li class="module-item">
+                  <div class="module-item-thumbnail">
+                    <div class="module-item-image">
+                      <img src="http://placehold.it/300x300" alt=""></div>
+                    </div>
+                  <h3 class="module-item-title">Titre du projet</h3>
+                  <p class="module-item-description small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos vero, nostrum. </p>
+                </li>                
+
+              </ul>
+
+              <div class="data-nav"> 
+                <p>28 / 3086 résultats</p>
+                <div class="more-data">
+                  <a href="#"><i class="fa fa-plus-square-o"></i></a>
+                </div>
+              </div>  
+            </div>
+            <div class="module-filters folded">
+              <form action="">
+                <input type="text">
+              </form>
+              <div class="tags"></div>
+            </div>
+          </div>
+          <footer>
+            <div class="status-msg">
+              
+            </div>
+          </footer>
+        </section>
+
+          </div>
+        </div>
+-->
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+
+    <script src="js/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="js/vendor/angular/angular.js"></script>
+    <script src="js/vendor/underscore/underscore-min.js"></script>
+    <script src="js/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="js/vendor/restangular/dist/restangular.js"></script>
+    <script src="js/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="js/vendor/slug/slug.js"></script>
+    <script src="js/vendor/angular-xeditable/dist/js/xeditable.min.js"></script>
+    <script src="js/vendor/rangy-official/rangy-core.min.js"></script>
+    <script src="js/vendor/rangy-official/rangy-classapplier.min.js"></script>
+    <script src="js/vendor/rangy-official/rangy-highlighter.min.js"></script>
+    <script src="js/vendor/rangy-official/rangy-selectionsaverestore.min.js"></script>
+    <script src="js/vendor/rangy-official/rangy-serializer.min.js"></script>
+    <script src="js/vendor/rangy-official/rangy-textrange.min.js"></script>
+    <script src="js/vendor/textAngular/dist/textAngular-sanitize.min.js"></script>
+    <script src="js/vendor/textAngular/dist/textAngular.min.js"></script>
+    <script src="js/vendor/ng-tags-input/ng-tags-input.min.js"></script>
+    <script src="js/vendor/moment/min/moment.min.js"></script>
+    <script src="js/vendor/angular-moment/angular-moment.min.js"></script>
+    <script src="js/vendor/moment/locale/fr.js"></script>
+    <script src="js/vendor/angular-unisson-auth/angular-unisson-auth.js"></script>
+    <script src="js/vendor/angular-http-auth/src/http-auth-interceptor.js"></script>
+    <script src="js/vendor/angular-oauth/src/js/angularOauth.js"></script>
+    <script src="js/vendor/angular-oauth/src/js/googleOauth.js"></script>
+    <script src="js/vendor/angular-cookies/angular-cookies.min.js"></script>
+    <script src="js/vendor/angularjs-gravatardirective/dist/angularjs-gravatardirective.min.js"></script>
+    <script src="js/vendor/es5-shim/es5-sham.min.js"></script>
+    <script src="js/vendor/es5-shim/es5-shim.min.js"></script>
+    <script src="js/vendor/angular-file-upload/angular-file-upload.min.js"></script>
+    <script src="js/vendor/leaflet/dist/leaflet.js"></script>
+    <script src="js/vendor/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+    <script src="js/vendor/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
+    <script src="js/vendor/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script src="js/vendor/angucomplete-alt/angucomplete-alt.js"></script>
+    <script src="js/vendor/ng-videosharing-embed/build/ng-videosharing-embed.min.js"></script>
+    <script src="js/vendor/geocoder-service/geocoder-service.min.js"></script>
+    <script src="js/vendor/angular-breadcrumb/release/angular-breadcrumb.min.js"></script>
+    <script src="js/vendor/bootstrap/js/dropdown.js"></script>
+    <script src="js/vendor/angular-truncate/src/truncate.js"></script>
+    <script src="js/vendor/checklist-model/checklist-model.js"></script>
+    <script src="js/vendor/angular-loading-bar/build/loading-bar.min.js"></script>
+    <script src="js/vendor/angular-capitalize-filter/capitalize.min.js"></script
+    <script src="js/vendor/angular-slugify/angular-slugify.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+
+    <script src="js/imagination/catalog/controllers.js"></script>
+    <script src="js/imagination/profile/controllers.js"></script>
+    <script src="js/imagination/profile/services.js"></script>
+    <script src="js/map/controllers.js"></script>
+    <script src="js/commons/base/controllers.js"></script>
+    <script src="js/commons/base/services.js"></script>
+    <script src="js/commons/base/filters.js"></script>
+    <script src="js/commons/catalog/controllers.js"></script>
+    <script src="js/commons/catalog/services.js"></script>
+    <script src="js/commons/commonsdevmap/services.js"></script>
+    <script src="js/commons/accounts/services.js"></script>
+    <script src="js/commons/accounts/controllers.js"></script>
+    <script src="js/commons/accounts/directives.js"></script>
+    <script src="js/commons/graffiti/controllers.js"></script>
+    <script src="js/commons/graffiti/services.js"></script>
+    <script src="js/commons/ucomment/controllers.js"></script>
+    <script src="js/commons/ucomment/services.js"></script>
+    <script src="bower_components/foundation/js/foundation.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="bower_components/slick-carousel/slick/slick.min.js"></script>
+    <script src="js/front.js"></script>
+  </body>
 </html>

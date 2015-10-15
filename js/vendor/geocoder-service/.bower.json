@@ -1,0 +1,30 @@
+{
+  "name": "geocoder-service",
+  "version": "0.0.5",
+  "private": false,
+  "dependencies": {
+    "angular": "~1.2.23"
+  },
+  "ignore": [
+    "Gruntfile.js",
+    "package.json",
+    ".gitignore",
+    ".git/*",
+    "LICENSE",
+    "README.md"
+  ],
+  "main": [
+    "geocoder-service.js",
+    "geocoder-service.min.js"
+  ],
+  "homepage": "https://github.com/TheBosZ/geocoder-service",
+  "_release": "0.0.5",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.5",
+    "commit": "988fc07d5ff5f35d79cc136ee3766cf2bc9e1247"
+  },
+  "_source": "git://github.com/TheBosZ/geocoder-service.git",
+  "_target": "~0.0.2",
+  "_originalSource": "geocoder-service"
+}

@@ -47,7 +47,7 @@ Installation
 
 
 Personnaliation
-=====
+===============
 
 Vous pouvez personnaliser votre installation avec le fichier config.coffee (à regénérer après chaque modification):
 

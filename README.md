@@ -1,6 +1,9 @@
-# Foundation Compass Template
 
-The easiest way to get started with Foundation + Compass.
+
+Project platform HTML FrontEnd
+===========
+
+A Projet front-end companion for the Data Server.
 
 ## Requirements
 
@@ -8,13 +11,6 @@ The easiest way to get started with Foundation + Compass.
   * [Node.js](http://nodejs.org)
   * [compass](http://compass-style.org/): `gem install compass`
   * [bower](http://bower.io): `npm install bower -g`
-
-Project platform HTML FrontEnd
-===========
-
-A Projet front-end companion for the Data Server.
-
-Version 0.5.6
 
 Installation
 =====

@@ -2,7 +2,7 @@
     templateBaseUrl: '/views/',
     useHtml5Mode: false,
     projectSheetTemplateSlug: 'unisson',
-    defaultSiteTags: ['Mobilité','SEL'],  # comma-separated list of site tags
+    defaultSiteTags: [],  # comma-separated list of site tags
     editorialSuggestedTags : [], # list of tags suggested instead of most popular ones
     defaultResultLimit : 28, # nb of results loaded by default in projects list page
 
